@@ -140,12 +140,12 @@ you can fix jacob cmd line endings with [dos2unix](http://manpages.ubuntu.com/ma
 
 To make it an actual mustache compiler, I'd first create handlers for language expressions - variables and various types of sections, and then after passing them to parser, replace returned json with the actual code, by calling the handlers. The worst part (recognizing language) is already done, so that shouldn't be too hard.
 
-You can pass any arguments to parser
+You can pass any arguments to parser in src/index.js
 ```
-parse(....)
+parser.parse(lexer, { variables: { foo: 'bar' }  });
 ```
-and call them there as you would in javascript
+and call them in *parser.jacobgram* as you would in javascript
 ```
-context: 
+Start = TPL_TOKENS  function(e) { console.log(this.variables.foo); return e; };
 ```
 
