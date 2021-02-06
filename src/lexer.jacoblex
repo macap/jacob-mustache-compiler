@@ -1,0 +1,19 @@
+%moduleName MyLexer
+
+%%
+
+name = [a-z0-9.][a-z0-9_:.\-]*
+special = [#^/]
+
+%%
+<>\s* { }
+
+<>[{]{2} { this.pushState('mustag'); return 'MUSTAG_START'; }
+<mustag>{special} { return this.jjtext; }
+<mustag>{name} { return 'TEXT'; }
+<mustag>[}]{2} { this.popState(); return 'MUSTAG_END'; }
+
+<>[{]|[^{]* { return 'TEXT';}
+
+<>$ { console.log('EOF'); return 'EOF'; }
+

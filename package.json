@@ -1,0 +1,18 @@
+{
+  "name": "mustache-compiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "jacob -t src/lexer.jacoblex && jacob -g src/parser.jacobgram",
+    "dist": "yarn build && cp src/index.js src/lexer.jacoblex.out.js src/parser.jacobgram.out.js dist/",
+    "dev": "node src/dev.js",
+    "test": "jest"
+  },
+  "author": "Maciej Caputa",
+  "license": "ISC",
+  "devDependencies": {
+    "jacob": "^1.0.5",
+    "jest": "^24.8.0"
+  }
+}

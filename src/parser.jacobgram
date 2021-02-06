@@ -1,0 +1,25 @@
+Start = TPL_TOKENS  function(e) { return e; };
+TPL_TOKENS = 
+    TPL_TOKEN function(token) { return [token]; } 
+    | TPL_TOKENS TPL_TOKEN function(tok1, tok2) { 
+        return [...tok1, tok2];
+    };
+TPL_TOKEN = 
+    'TEXT' function(text) { 
+        const res = {tokenType: 'text', tokenVar: text };
+        return res;
+     } 
+    | 'MUSTAG_START' 'TEXT' 'MUSTAG_END' function(_, text){
+        const res = {tokenType: 'tag', tokenVar: text };
+        return res;
+    }
+    | 'MUSTAG_START' '#' 'TEXT' 'MUSTAG_END' TPL_TOKENS 'MUSTAG_START' '/' 'TEXT' 'MUSTAG_END' function(_, _, text, _, section) {
+        const res = {tokenType: 'section', tokenVar: text, section: section };
+        return res;
+    };
+TEXT = 
+        'TEXT' function(txt) { return txt }
+        | TEXT 'TEXT' function(t1,t2) {
+
+            return t1;
+        };
